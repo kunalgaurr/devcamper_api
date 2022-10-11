@@ -2,9 +2,9 @@ const errorHandler = (error, req, res, next) => {
   // log to console for dev
   console.log(error.stack.red);
 
-  res.status(500).json({
+  res.status(error.statusCode || 500).json({
     success: false,
-    error: error.message,
+    error: error.message || 'Server Error',
   });
 };
 
