@@ -7,7 +7,17 @@ const ErrorResponse = require('../utils/errorResponse');
 //@route        GET /api/v1/bootcamps
 //@access       Public
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
-  const bootcamps = await Bootcamp.find();
+  let query;
+
+  let queryStr = JSON.stringify(req.query);
+
+  queryStr = queryStr.replace(/\b(gt|gte|lte|in)\b/g, (match) => `$${match}`);
+
+  query = Bootcamp.find(JSON.parse(queryStr));
+
+  const bootcamps = await query;
+
+  console.log(req.query);
 
   res
     .status(200)
@@ -31,12 +41,16 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 //@route        POST /api/v1/bootcamps/:id
 //@access       Private
 exports.createBootcamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.create(req.body);
+  try {
+    const bootcamp = await Bootcamp.create(req.body);
 
-  res.status(201).json({
-    success: true,
-    data: bootcamp,
-  });
+    res.status(201).json({
+      success: true,
+      data: bootcamp,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 //@desc         Update bootcamp

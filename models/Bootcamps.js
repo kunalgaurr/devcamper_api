@@ -42,12 +42,12 @@ const BootcampSchema = new mongoose.Schema({
     type: {
       type: String,
       enum: ['Point'],
-      // required: true,
+      required: true,
     },
     coordinates: {
       type: [Number],
-      // required: true,
-      index: '2dsphere',
+      required: true,
+      // index: '2dsphere',
     },
     formattedAddress: String,
     Street: String,
@@ -120,7 +120,7 @@ BootcampSchema.pre('save', async function (next) {
     country: loc[0].countryCode,
   };
 
-  //do nnot save address in DB
+  //do not save address in DB
   this.address = undefined;
   next();
 });

@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production node server",
     "dev": "nodemon server"
   },
-  "author": "Kunal GAur",
+  "author": "Kunal Gaur",
   "license": "MIT",
   "dependencies": {
     "colors": "^1.4.0",
